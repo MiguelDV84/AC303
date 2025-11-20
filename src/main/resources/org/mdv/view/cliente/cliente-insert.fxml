@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mdv.view.controller.ClienteInsertController"
+            style="-fx-background-color: #F5F5F5;">
+
+    <!-- ======================= BARRA SUPERIOR ======================= -->
+    <top>
+        <HBox fx:id="topBar"
+              style="-fx-background-color: #2C3E50; -fx-padding: 10;"
+              alignment="CENTER_LEFT">
+
+            <Button text="← Volver"
+                    onAction="#handleBackButton"
+                    style="-fx-background-color: #BDC3C7; -fx-background-radius: 6;
+                           -fx-text-fill: black; -fx-padding: 5 15;"/>
+
+            <Label text="Nuevo Cliente - Sistema MDV"
+                   style="-fx-text-fill: white; -fx-font-size: 16px;
+                          -fx-font-weight: bold;" />
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <!-- BOTONES MACOS -->
+            <HBox spacing="8">
+                <Circle radius="6" fill="#2ECC71" onMouseClicked="#minimizarVentana"/>
+                <Circle radius="6" fill="#F1C40F" onMouseClicked="#maximizarVentana"/>
+                <Circle radius="6" fill="#E74C3C" onMouseClicked="#cerrarVentana"/>
+            </HBox>
+
+        </HBox>
+    </top>
+
+    <!-- ======================= CONTENIDO ======================= -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+
+            <!-- ========= SECCIÓN: DATOS PERSONALES =========== -->
+            <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20;
+                                      -fx-border-color: #D0D0D0; -fx-background-radius: 8;
+                                      -fx-border-radius: 8;">
+
+                <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10;
+                              -fx-background-radius: 8;">
+                    <Label text="🧾 Datos Personales"
+                           style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                </HBox>
+
+                <GridPane hgap="20" vgap="10">
+
+                    <!-- DNI -->
+                    <Label text="DNI:*" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtDni"
+                               promptText="Ej: 12345678A"
+                               GridPane.rowIndex="1" GridPane.columnIndex="0"
+                               style="-fx-background-radius: 4;"/>
+
+                    <!-- Nombre -->
+                    <Label text="Nombre:*" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                    <TextField fx:id="txtNombre"
+                               promptText="Nombre del cliente"
+                               GridPane.rowIndex="1" GridPane.columnIndex="1"
+                               style="-fx-background-radius: 4;"/>
+
+                    <!-- Apellidos -->
+                    <Label text="Apellidos:*" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtApellidos"
+                               promptText="Apellidos del cliente"
+                               GridPane.rowIndex="3" GridPane.columnIndex="0"
+                               GridPane.columnSpan="2"
+                               style="-fx-background-radius: 4;"/>
+
+                    <!-- Teléfono -->
+                    <Label text="Teléfono:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <TextField fx:id="txtTelefono"
+                               promptText="Ej: 612345678"
+                               GridPane.rowIndex="5" GridPane.columnIndex="0"
+                               style="-fx-background-radius: 4;"/>
+
+                </GridPane>
+
+            </VBox>
+
+            <!-- ========= SECCIÓN: DIRECCIONES =========== -->
+            <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20;
+                                      -fx-border-color: #D0D0D0; -fx-background-radius: 8;
+                                      -fx-border-radius: 8;">
+
+                <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10;
+                              -fx-background-radius: 8;">
+                    <Label text="🏠 Direcciones"
+                           style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                </HBox>
+
+                <Label text="Dirección Habitual:"/>
+                <TextField fx:id="txtDirHabitual"
+                           promptText="Calle, número, piso, puerta (opcional)"
+                           style="-fx-background-radius: 4;"/>
+
+                <Label text="Dirección de Envío:*"/>
+                <HBox spacing="10">
+                    <TextField fx:id="txtDirEnvio"
+                               HBox.hgrow="ALWAYS"
+                               promptText="Dirección donde se realizarán los envíos"
+                               style="-fx-background-radius: 4;"/>
+                    <Button text="📋 Copiar"
+                            onAction="#copiarDireccion"
+                            style="-fx-background-color: #9B59B6; -fx-text-fill: white;
+                                   -fx-background-radius: 6;"/>
+                </HBox>
+
+            </VBox>
+
+            <!-- NOTA -->
+            <HBox style="-fx-background-color: #FDEBD0; -fx-padding: 10;
+                          -fx-border-color: #FAD7A0; -fx-border-radius: 6;
+                          -fx-background-radius: 6;">
+                <Label text="📘 Nota: Los campos marcados con * son obligatorios"
+                       style="-fx-text-fill: #A67C00;"/>
+            </HBox>
+
+            <!-- BOTONES -->
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+
+                <Button text="✖ Cancelar"
+                        onAction="#handleBackButton"
+                        style="-fx-background-color: #95A5A6; -fx-text-fill: white;
+                               -fx-background-radius: 6;"/>
+
+                <Button text="🧹 Limpiar"
+                        onAction="#limpiarCampos"
+                        style="-fx-background-color: #E67E22; -fx-text-fill: white;
+                               -fx-background-radius: 6;"/>
+
+                <Button text="💾 Guardar"
+                        onAction="#guardarCliente"
+                        style="-fx-background-color: #2ECC71; -fx-text-fill: white;
+                               -fx-background-radius: 6;"/>
+
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

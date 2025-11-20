@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mdv.view.controller.VentaListadoController"
+            style="-fx-background-color: #F5F5F5;">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox fx:id="topBar" alignment="CENTER_LEFT"
+              style="-fx-background-color: #2C3E50; -fx-padding: 10;">
+
+            <Button text="← Volver"
+                    onAction="#handleBackButton"
+                    style="-fx-background-color: #BDC3C7; -fx-background-radius: 6; -fx-text-fill: black;"/>
+
+            <Label text="Listado de Ventas"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <HBox spacing="8">
+                <Circle radius="6" fill="#2ECC71" onMouseClicked="#minimizarVentana"/>
+                <Circle radius="6" fill="#F1C40F" onMouseClicked="#maximizarVentana"/>
+                <Circle radius="6" fill="#E74C3C" onMouseClicked="#cerrarVentana"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- CONTENIDO -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+
+            <!-- TABLA SUPERIOR -->
+            <TableView fx:id="tablaVentas" prefHeight="300"
+                       style="-fx-background-color: white; -fx-border-color: #D0D0D0; -fx-border-radius: 8;">
+                <columns>
+                    <TableColumn fx:id="colFecha" text="Fecha" prefWidth="150"/>
+                    <TableColumn fx:id="colCliente" text="Cliente" prefWidth="250"/>
+                    <TableColumn fx:id="colTotal" text="Importe Total" prefWidth="150"/>
+                </columns>
+            </TableView>
+
+            <!-- PANEL DETALLES -->
+            <VBox spacing="12"
+                  style="-fx-background-color: white; -fx-padding: 20;
+                         -fx-background-radius: 8; -fx-border-color: #D0D0D0;">
+
+                <Label text="Detalles de la Venta"
+                       style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+
+                <Label fx:id="lblDetalleCliente" text="Cliente: "/>
+                <Label fx:id="lblDetalleFecha" text="Fecha: "/>
+                <Label fx:id="lblDetalleTotal" text="Total: "/>
+
+                <Label text="Artículos:" style="-fx-font-weight: bold;"/>
+
+                <TableView fx:id="tablaDetalles" prefHeight="200">
+                    <columns>
+                        <TableColumn fx:id="colProd" text="Producto" prefWidth="250"/>
+                        <TableColumn fx:id="colCant" text="Cant." prefWidth="80"/>
+                        <TableColumn fx:id="colPrecio" text="Precio U." prefWidth="100"/>
+                        <TableColumn fx:id="colLinea" text="Subtotal" prefWidth="120"/>
+                    </columns>
+                </TableView>
+
+                <Label fx:id="lblSinDetalles"
+                       text="No hay detalles para esta venta."
+                       visible="false"
+                       style="-fx-text-fill: gray; -fx-font-size: 12;"/>
+
+            </VBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

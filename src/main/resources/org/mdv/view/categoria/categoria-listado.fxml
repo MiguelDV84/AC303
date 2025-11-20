@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mdv.view.controller.CategoriaListadoController"
+            style="-fx-background-color: #F5F5F5;">
+
+    <!-- TOP BAR -->
+    <top>
+        <HBox fx:id="topBar"
+              alignment="CENTER_LEFT"
+              style="-fx-background-color: #2C3E50; -fx-padding: 10;">
+
+            <Button text="← Volver"
+                    onAction="#handleBackButton"
+                    style="-fx-background-color: #BDC3C7; -fx-background-radius: 6; -fx-text-fill: black;"/>
+
+            <Label text="Gestión de Categorías"
+                   style="-fx-text-fill: white; -fx-font-size: 18px;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <HBox spacing="8">
+                <Circle radius="6" fill="#2ECC71" onMouseClicked="#minimizarVentana"/>
+                <Circle radius="6" fill="#F1C40F" onMouseClicked="#maximizarVentana"/>
+                <Circle radius="6" fill="#E74C3C" onMouseClicked="#cerrarVentana"/>
+            </HBox>
+
+        </HBox>
+    </top>
+
+    <!-- CONTENIDO -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+
+            <!-- FILTROS -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+
+                <TextField fx:id="txtFiltro"
+                           promptText="Buscar..."
+                           style="-fx-background-radius: 4;"/>
+
+                <Button text="🔍 Buscar ID"
+                        onAction="#filtrar"
+                        style="-fx-background-color: #3498DB; -fx-text-fill: white;"/>
+
+                <Button text="🔍 Buscar Nombre"
+                        onAction="#filtrar"
+                        style="-fx-background-color: #9B59B6; -fx-text-fill: white;"/>
+
+                <Button text="🔄 Actualizar"
+                        onAction="#obtenerCategorias"
+                        style="-fx-background-color: #F39C12; -fx-text-fill: white;"/>
+
+                <Button text="➕ Nueva Categoría"
+                        onAction="#handleNuevaCategoria"
+                        style="-fx-background-color: #2ECC71; -fx-text-fill: white;"/>
+
+                <Button text="✏️ Editar"
+                        onAction="#handleEditarCategoria"
+                        style="-fx-background-color: #E67E22; -fx-text-fill: white;"/>
+
+                <Button text="🗑 Eliminar"
+                        onAction="#handleEliminarCategoria"
+                        style="-fx-background-color: #E74C3C; -fx-text-fill: white;"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="lblTotalCategorias"
+                       text="Total: 0 categorías"
+                       style="-fx-text-fill: #777;"/>
+            </HBox>
+
+            <!-- TABLA -->
+            <TableView fx:id="tablaCategorias"
+                       VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: white; -fx-border-color: #D0D0D0; -fx-border-radius: 8;">
+
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="120"/>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="300"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </center>
+
+</BorderPane>

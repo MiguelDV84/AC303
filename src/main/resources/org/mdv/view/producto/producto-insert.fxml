@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mdv.view.controller.ProductoInsertController"
+            style="-fx-background-color: #F5F5F5;">
+
+    <!-- ========================================================== -->
+    <!-- ======================= BARRA SUPERIOR ==================== -->
+    <!-- ========================================================== -->
+    <top>
+        <HBox fx:id="topBar"
+              style="-fx-background-color: #2C3E50; -fx-padding: 10;"
+              alignment="CENTER_LEFT">
+
+            <Button text="← Volver"
+                    onAction="#handleBackButton"
+                    style="-fx-background-color: #BDC3C7; -fx-background-radius: 6;
+                           -fx-text-fill: black; -fx-padding: 5 15;"/>
+
+            <Label text="Nuevo Producto - Sistema MDV"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <HBox spacing="8">
+                <Circle radius="6" fill="#2ECC71" onMouseClicked="#minimizarVentana"/>
+                <Circle radius="6" fill="#F1C40F" onMouseClicked="#maximizarVentana"/>
+                <Circle radius="6" fill="#E74C3C" onMouseClicked="#cerrarVentana"/>
+            </HBox>
+
+        </HBox>
+    </top>
+
+    <!-- ========================================================== -->
+    <!-- ======================== CONTENIDO ======================== -->
+    <!-- ========================================================== -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background-color: transparent;">
+            <VBox spacing="25"
+                  style="-fx-padding: 25;"
+                  alignment="TOP_CENTER">
+
+                <!-- =================== INFORMACIÓN DEL PRODUCTO =================== -->
+                <VBox spacing="15"
+                      style="-fx-background-color: white; -fx-padding: 20;
+                             -fx-border-color: #D0D0D0; -fx-border-radius: 10;
+                             -fx-background-radius: 10;">
+
+                    <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10;
+                                  -fx-background-radius: 8;">
+                        <Label text="Información del Producto"
+                               style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+
+                    <Label text="Código del Producto:*"/>
+                    <TextField fx:id="txtCodigo"
+                               promptText="Ej: PROD-001 o código de barras"
+                               style="-fx-background-radius: 4;"/>
+
+                    <Label text="Descripción:*"/>
+                    <TextField fx:id="txtDescripcion"
+                               promptText="Nombre y descripción del producto"
+                               style="-fx-background-radius: 4;"/>
+                </VBox>
+
+                <!-- =================== PRECIO Y EXISTENCIAS =================== -->
+                <VBox spacing="15"
+                      style="-fx-background-color: white; -fx-padding: 20;
+                             -fx-border-color: #D0D0D0; -fx-border-radius: 10;
+                             -fx-background-radius: 10;">
+
+                    <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10;
+                                  -fx-background-radius: 8;">
+                        <Label text="Precio y Existencias"
+                               style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+
+                    <GridPane hgap="20" vgap="10">
+
+                        <Label text="Precio Recomendado:*" GridPane.rowIndex="0"/>
+                        <HBox spacing="5" GridPane.rowIndex="1">
+                            <TextField fx:id="txtPrecio"
+                                       promptText="0.00"
+                                       style="-fx-background-radius: 4;"/>
+                            <Label text="€"/>
+                        </HBox>
+
+                        <Label text="Existencias:*" GridPane.rowIndex="2"/>
+                        <HBox spacing="5" GridPane.rowIndex="3">
+                            <TextField fx:id="txtExistencias"
+                                       promptText="0"
+                                       style="-fx-background-radius: 4;"/>
+                            <Label text="uds."/>
+                        </HBox>
+
+
+                    </GridPane>
+
+                </VBox>
+
+                <!-- =================== CATEGORÍA =================== -->
+                <VBox spacing="15"
+                      style="-fx-background-color: white; -fx-padding: 20;
+                             -fx-border-color: #D0D0D0; -fx-border-radius: 10;
+                             -fx-background-radius: 10;">
+
+                    <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10;
+                                  -fx-background-radius: 8;">
+                        <Label text="Categoría del Producto"
+                               style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+
+                    <Label text="Seleccionar Categoría:*"/>
+                    <HBox spacing="10">
+                        <ComboBox fx:id="comboCategoria"
+                                  promptText="Seleccione una categoría..."
+                                  HBox.hgrow="ALWAYS"/>
+                    </HBox>
+
+                </VBox>
+
+                <!-- =================== BOTONES =================== -->
+                <HBox spacing="15" alignment="CENTER_RIGHT">
+                    <Region HBox.hgrow="ALWAYS"/>
+
+                    <Button text="✖ Cancelar"
+                            onAction="#handleBackButton"
+                            style="-fx-background-color: #7F8C8D; -fx-text-fill: white;
+                                   -fx-background-radius: 6;"/>
+
+                    <Button text="🧹 Limpiar"
+                            onAction="#limpiarCampos"
+                            style="-fx-background-color: #E67E22; -fx-text-fill: white;
+                                   -fx-background-radius: 6;"/>
+
+                    <Button text="💾 Guardar"
+                            onAction="#guardarProducto"
+                            style="-fx-background-color: #2ECC71; -fx-text-fill: white;
+                                   -fx-background-radius: 6;"/>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

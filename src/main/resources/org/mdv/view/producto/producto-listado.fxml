@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mdv.view.controller.ProductoListadoController"
+            style="-fx-background-color: #F5F5F5;">
+
+    <!-- ======================= BARRA SUPERIOR ==================== -->
+    <top>
+        <HBox fx:id="topBar"
+              style="-fx-background-color: #2C3E50; -fx-padding: 10;"
+              alignment="CENTER_LEFT">
+
+            <Button text="← Volver"
+                    onAction="#handleBackButton"
+                    style="-fx-background-color: #BDC3C7; -fx-background-radius: 6;
+                           -fx-text-fill: black; -fx-padding: 5 15;"/>
+
+            <Label text="Gestión de Productos"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <HBox spacing="8">
+                <Circle radius="6" fill="#2ECC71" onMouseClicked="#minimizarVentana"/>
+                <Circle radius="6" fill="#F1C40F" onMouseClicked="#maximizarVentana"/>
+                <Circle radius="6" fill="#E74C3C" onMouseClicked="#cerrarVentana"/>
+            </HBox>
+
+        </HBox>
+    </top>
+
+
+    <!-- ====================== CONTENIDO PRINCIPAL ==================== -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;" fillWidth="true">
+
+            <!-- FILTROS Y BOTONES -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+
+                <VBox spacing="3">
+                    <TextField fx:id="txtFiltro"
+                               promptText="Buscar..."
+                               style="-fx-background-radius: 4; -fx-padding: 6;"/>
+                </VBox>
+
+                <Button onAction="#filtrarPorCodigo"
+                        style="-fx-background-color: #3498DB; -fx-background-radius: 6;
+                               -fx-text-fill: white;">
+                    🔍 Buscar Código
+                </Button>
+
+                <Button onAction="#filtrarPorNombre"
+                        style="-fx-background-color: #9B59B6; -fx-background-radius: 6;
+                               -fx-text-fill: white;">
+                    🔍 Buscar Nombre
+                </Button>
+
+                <Button onAction="#obtenerProductos"
+                        style="-fx-background-color: #F39C12; -fx-background-radius: 6;
+                               -fx-text-fill: white;">
+                    🔄 Actualizar
+                </Button>
+
+                <Button style="-fx-background-color: #2ECC71; -fx-background-radius: 6;
+                               -fx-text-fill: white;"
+                        onAction="#handleNuevoProducto">
+                    ➕ Nuevo Producto
+                </Button>
+
+                <Button style="-fx-background-color: #E67E22; -fx-background-radius: 6;
+                               -fx-text-fill: white;"
+                        onAction="#handleEditarProducto">
+                    ✏️ Editar
+                </Button>
+
+                <Button style="-fx-background-color: #E74C3C; -fx-background-radius: 6;
+                               -fx-text-fill: white;"
+                        onAction="#handleEliminarProducto">
+                    🗑 Eliminar
+                </Button>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Label text="Total productos" fx:id="lblTotal"
+                       style="-fx-text-fill: #777; -fx-font-size: 12;"/>
+            </HBox>
+
+
+            <!-- TABLA -->
+            <TableView fx:id="tablaProductos"
+                       VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: white; -fx-border-color: #D0D0D0;
+                              -fx-border-radius: 8; -fx-background-radius: 8;">
+
+                <columns>
+                    <TableColumn fx:id="colCodigo" text="Código" prefWidth="120"/>
+                    <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="250"/>
+                    <TableColumn fx:id="colPrecio" text="Precio" prefWidth="120"/>
+                    <TableColumn fx:id="colStock" text="Stock" prefWidth="120"/>
+                    <TableColumn fx:id="colCategoria" text="Categoría" prefWidth="150"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </center>
+
+</BorderPane>

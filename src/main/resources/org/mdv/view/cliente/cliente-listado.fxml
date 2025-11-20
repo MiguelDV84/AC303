@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.shape.Circle?>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mdv.view.controller.ClienteListadoController"
+            style="-fx-background-color: #F5F5F5;">
+
+    <!-- ========================================================== -->
+    <!-- ======================= BARRA SUPERIOR ==================== -->
+    <!-- ========================================================== -->
+    <top>
+        <HBox fx:id="topBar"
+              style="-fx-background-color: #2C3E50; -fx-padding: 10;"
+              alignment="CENTER_LEFT">
+
+            <Button text="← Volver"
+                    onAction="#handleBackButton"
+                    style="-fx-background-color: #BDC3C7; -fx-background-radius: 6; -fx-text-fill: black; -fx-padding: 5 15;"/>
+
+            <Label text="Gestión de Clientes"
+                   style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <!-- BOTONES TIPO MACOS -->
+            <HBox fx:id="windowButtons" spacing="8">
+                <Circle radius="6" fill="#2ECC71" onMouseClicked="#minimizarVentana"/>
+                <Circle radius="6" fill="#F1C40F" onMouseClicked="#maximizarVentana"/>
+                <Circle radius="6" fill="#E74C3C" onMouseClicked="#cerrarVentana"/>
+            </HBox>
+
+        </HBox>
+    </top>
+
+    <!-- ========================================================== -->
+    <!-- ====================== CONTENIDO PRINCIPAL =============== -->
+    <!-- ========================================================== -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;" fillWidth="true">
+
+            <!-- FILTROS Y BOTONES -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+
+                <!-- Campo Filtro DNI -->
+                <VBox spacing="3">
+                    <TextField fx:id="txtFiltro"
+                               promptText="Buscar..."
+                               style="-fx-background-radius: 4; -fx-padding: 6;"/>
+                </VBox>
+
+                <!-- Lupa buscar -->
+                <Button onAction="#filtrarPorDni"
+                        style="-fx-background-color: #3498DB; -fx-background-radius: 6; -fx-text-fill: white;">
+                    🔍 Buscar
+                </Button>
+
+                <!-- Buscar por nombre -->
+                <Button onAction="#filtrarPorNombre"
+                        style="-fx-background-color: #9B59B6; -fx-background-radius: 6; -fx-text-fill: white;">
+                    🔍 Buscar Nombre
+                </Button>
+
+                <!-- Actualizar -->
+                <Button onAction="#obtenerClientes"
+                        style="-fx-background-color: #F39C12; -fx-background-radius: 6; -fx-text-fill: white;">
+                    🔄 Actualizar
+                </Button>
+
+                <!-- Nuevo Cliente -->
+                <Button style="-fx-background-color: #2ECC71; -fx-background-radius: 6; -fx-text-fill: white;"
+                        onAction="#handleNuevoCliente">
+                    ➕ Nuevo Cliente
+                </Button>
+
+                <!-- Editar -->
+                <Button style="-fx-background-color: #E67E22; -fx-background-radius: 6; -fx-text-fill: white;"
+                        onAction="#handleEditarCliente">
+                    ✏️ Editar
+                </Button>
+
+                <!-- Eliminar -->
+                <Button style="-fx-background-color: #E74C3C; -fx-background-radius: 6; -fx-text-fill: white;"
+                        onAction="#handleEliminarCliente">
+                    🗑 Eliminar
+                </Button>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Label text="Total: 156 clientes"
+                       style="-fx-text-fill: #777; -fx-font-size: 12;"/>
+            </HBox>
+
+            <!-- TABLA -->
+            <TableView fx:id="tablaClientes"
+                       VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: white; -fx-border-color: #D0D0D0; -fx-border-radius: 8; -fx-background-radius: 8;">
+
+                <columns>
+                    <TableColumn fx:id="colNombre" text="Nombre" prefWidth="150"/>
+                    <TableColumn fx:id="colDni" text="DNI" prefWidth="100"/>
+                    <TableColumn fx:id="colApellidos" text="Apellidos" prefWidth="150"/>
+                    <TableColumn fx:id="colTelefono" text="Teléfono" prefWidth="120"/>
+                    <TableColumn fx:id="colDirHabitual" text="Dir. Habitual" prefWidth="200"/>
+                    <TableColumn fx:id="colDirEnvio" text="Dir. Envío" prefWidth="200"/>
+                </columns>
+            </TableView>
+
+            <!-- PIE DE PÁGINA -->
+            <HBox spacing="20" alignment="CENTER_RIGHT">
+
+                <Label text="Mostrando 1-10 de 156 registros" style="-fx-text-fill: gray;"/>
+
+                <HBox spacing="5" alignment="CENTER">
+                    <Button text="⟨" style="-fx-background-color: #7F8C8D; -fx-text-fill: white;"/>
+                    <Button text="1" style="-fx-background-color: #3498DB; -fx-text-fill: white;"/>
+                    <Button text="2"/>
+                    <Button text="3"/>
+                    <Button text="16"/>
+                    <Button text="⟩" style="-fx-background-color: #7F8C8D; -fx-text-fill: white;"/>
+                </HBox>
+
+                <Label text="Registros/página:"/>
+
+                <ComboBox prefWidth="60">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="10"/>
+                            <String fx:value="25"/>
+                            <String fx:value="50"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

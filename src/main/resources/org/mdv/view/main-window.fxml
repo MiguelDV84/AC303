@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.mdv.view.controller.MainWindowController"
+            style="-fx-background-color: #F5F5F5;">
+
+    <!-- ========================================================== -->
+    <!-- ==================== BARRA SUPERIOR ======================= -->
+    <!-- ========================================================== -->
+    <top>
+        <HBox fx:id="topBar"
+              style="-fx-background-color: #2C3E50; -fx-padding: 10;"
+              alignment="CENTER_LEFT"
+              BorderPane.alignment="CENTER">
+            <Label text="Sistema de Gestión de Ventas - MDV"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <HBox fx:id="windowButtons" spacing="8" alignment="CENTER_RIGHT"
+                  style="-fx-padding: 0 10 0 0;" >
+                <!-- Minimizar -->
+                <Circle radius="6" fill="#F1C40F" onMouseClicked="#minimizarVentana"/>
+                <!-- Maximizar -->
+                <Circle radius="6" fill="#2ECC71" onMouseClicked="#maximizarVentana"/>
+                <!-- Cerrar -->
+                <Circle radius="6" fill="#E74C3C" onMouseClicked="#cerrarVentana"/>
+            </HBox>
+        </HBox>
+    </top>
+
+    <!-- ========================================================== -->
+    <!-- ======================= CONTENIDO ========================= -->
+    <!-- ========================================================== -->
+    <center>
+        <VBox spacing="25" style="-fx-padding: 20;" fillWidth="true">
+
+            <!-- PANEL DE BIENVENIDA -->
+            <HBox spacing="25"
+                  alignment="CENTER_LEFT"
+                  style="-fx-background-color: #ECF0F3; -fx-padding: 20; -fx-background-radius: 8;">
+                <StackPane>
+                    <Circle radius="38" fill="#39A0DB"/>
+                    <Label text="MDV"
+                           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                </StackPane>
+
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Bienvenido al Sistema de Gestión"
+                           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                    <Label text="Seleccione una opción para comenzar"
+                           style="-fx-font-size: 15px; -fx-text-fill: #555;"/>
+                </VBox>
+            </HBox>
+
+            <!-- ===================== TARJETAS ===================== -->
+            <GridPane hgap="20" vgap="20" style="-fx-padding: 10;"
+                      VBox.vgrow="ALWAYS">
+
+                <!-- FILA 1 -->
+                <VBox GridPane.rowIndex="0" GridPane.columnIndex="0"
+                      spacing="8"
+                      GridPane.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #DADADA; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox style="-fx-background-color: #2980B9; -fx-background-radius: 8; -fx-padding: 8;"
+                          alignment="CENTER_LEFT" spacing="8">
+                        <Label text="👤" style="-fx-font-size: 18;"/>
+                        <Label text="CLIENTES" style="-fx-font-size: 16; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <VBox spacing="4">
+                        <Label text="• Alta de clientes"/>
+                        <Label text="• Consulta y modificación"/>
+                        <Label text="• Gestión de datos"/>
+                    </VBox>
+                    <Button text="Acceder" onAction="#handleVerClientes"
+                            style="-fx-text-fill: #2980B9;"/>
+                </VBox>
+
+                <VBox GridPane.rowIndex="0" GridPane.columnIndex="1"
+                      spacing="8"
+                      GridPane.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #DADADA; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox style="-fx-background-color: #E67E22; -fx-background-radius: 8; -fx-padding: 8;"
+                          alignment="CENTER_LEFT" spacing="8">
+                        <Label text="📦" style="-fx-font-size: 18;"/>
+                        <Label text="PRODUCTOS" style="-fx-font-size: 16; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <VBox spacing="4">
+                        <Label text="• Catálogo de productos"/>
+                        <Label text="• Control de existencias"/>
+                        <Label text="• Precios y categorías"/>
+                    </VBox>
+                    <Button text="Acceder" onAction="#handleVerProductos"
+                            style="-fx-text-fill: #E67E22;"/>
+                </VBox>
+
+                <VBox GridPane.rowIndex="0" GridPane.columnIndex="2"
+                      spacing="8"
+                      GridPane.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #DADADA; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox style="-fx-background-color: #8E44AD; -fx-background-radius: 8; -fx-padding: 8;"
+                          alignment="CENTER_LEFT" spacing="8">
+                        <Label text="🏷️" style="-fx-font-size: 18;"/>
+                        <Label text="CATEGORÍAS" style="-fx-font-size: 16; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <VBox spacing="4">
+                        <Label text="• Gestión de categorías"/>
+                        <Label text="• Clasificación productos"/>
+                        <Label text="• Organización catálogo"/>
+                    </VBox>
+                    <Button text="Acceder" onAction="#handleCategorias"
+                            style="-fx-text-fill: #8E44AD;"/>
+                </VBox>
+
+                <!-- FILA 2 -->
+                <VBox GridPane.rowIndex="1" GridPane.columnIndex="0"
+                      spacing="8"
+                      GridPane.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #DADADA; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox style="-fx-background-color: #27AE60; -fx-background-radius: 8; -fx-padding: 8;"
+                          alignment="CENTER_LEFT" spacing="8">
+                        <Label text="💰" style="-fx-font-size: 18;"/>
+                        <Label text="VENTAS" style="-fx-font-size: 16; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <VBox spacing="4">
+                        <Label text="• Nueva venta"/>
+                        <Label text="• Historial de ventas"/>
+                        <Label text="• Consultas y reportes"/>
+                    </VBox>
+                    <Button text="Acceder" onAction="#handleVentas"
+                            style="-fx-text-fill: #27AE60;"/>
+                </VBox>
+
+                <VBox GridPane.rowIndex="1" GridPane.columnIndex="1"
+                      spacing="8"
+                      GridPane.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #DADADA; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox style="-fx-background-color: #C0392B; -fx-background-radius: 8; -fx-padding: 8;"
+                          alignment="CENTER_LEFT" spacing="8">
+                        <Label text="📊" style="-fx-font-size: 18;"/>
+                        <Label text="REPORTES" style="-fx-font-size: 16; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <VBox spacing="4">
+                        <Label text="• Estadísticas de ventas"/>
+                        <Label text="• Análisis de productos"/>
+                        <Label text="• Informes de clientes"/>
+                    </VBox>
+                    <Button text="Acceder" onAction="#handleReportes"
+                            style="-fx-text-fill: #C0392B;"/>
+                </VBox>
+
+                <VBox GridPane.rowIndex="1" GridPane.columnIndex="2"
+                      spacing="8"
+                      GridPane.hgrow="ALWAYS"
+                      style="-fx-background-color: white; -fx-padding: 15; -fx-border-color: #DADADA; -fx-border-radius: 8; -fx-background-radius: 8;">
+                    <HBox style="-fx-background-color: #2C3E50; -fx-background-radius: 8; -fx-padding: 8;"
+                          alignment="CENTER_LEFT" spacing="8">
+                        <Label text="⚙️" style="-fx-font-size: 18;"/>
+                        <Label text="CONFIGURACIÓN" style="-fx-font-size: 16; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                    </HBox>
+                    <VBox spacing="4">
+                        <Label text="• Parámetros sistema"/>
+                        <Label text="• Preferencias"/>
+                        <Label text="• Ayuda y soporte"/>
+                    </VBox>
+                    <Button text="Acceder" onAction="#handleConfiguracion"
+                            style="-fx-text-fill: #2C3E50;"/>
+                </VBox>
+
+            </GridPane>
+
+        </VBox>
+    </center>
+
+</BorderPane>
