@@ -13,16 +13,12 @@
     <top>
         <HBox fx:id="topBar" alignment="CENTER_LEFT"
               style="-fx-background-color: #2C3E50; -fx-padding: 10;">
-
             <Button text="← Volver"
                     onAction="#handleBackButton"
                     style="-fx-background-color: #BDC3C7; -fx-background-radius: 6; -fx-text-fill: black;"/>
-
             <Label text="Listado de Ventas"
                    style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;"/>
-
             <Pane HBox.hgrow="ALWAYS"/>
-
             <HBox spacing="8">
                 <Circle radius="6" fill="#2ECC71" onMouseClicked="#minimizarVentana"/>
                 <Circle radius="6" fill="#F1C40F" onMouseClicked="#maximizarVentana"/>
@@ -35,9 +31,35 @@
     <center>
         <VBox spacing="20" style="-fx-padding: 20;">
 
-            <!-- TABLA SUPERIOR -->
-            <TableView fx:id="tablaVentas" prefHeight="300"
-                       style="-fx-background-color: white; -fx-border-color: #D0D0D0; -fx-border-radius: 8;">
+            <!-- BUSQUEDA -->
+            <HBox spacing="20" alignment="CENTER_LEFT">
+                <Label text="Cliente:"/>
+                <TextField fx:id="txtBuscarCliente" promptText="Nombre cliente..." onKeyReleased="#buscarPorCliente"/>
+
+                <Label text="Fecha:"/>
+                <DatePicker fx:id="dateBuscarFecha" onAction="#buscarPorFecha"/>
+
+                <Button text="Calcular total día" onAction="#calcularTotalDia"/>
+
+                <!-- ESTE LABEL FALTABA -->
+                <Label fx:id="lblTotalDia" text="Total dia:" style="-fx-font-weight:bold;"/>
+
+                <Pane HBox.hgrow="ALWAYS"/>
+
+                <Button text="↻" onAction="#handleActualizar"
+                        style="-fx-background-color:#f39c12; -fx-text-fill:white;"/>
+            </HBox>
+
+            <!-- BOTONES ACCIONES -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Nueva venta"
+                        fx:id="btnNuevaVenta"
+                        onAction="#handleNuevaVentaButton"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+            </HBox>
+
+            <!-- TABLA DE VENTAS -->
+            <TableView fx:id="tablaVentas" prefHeight="300">
                 <columns>
                     <TableColumn fx:id="colFecha" text="Fecha" prefWidth="150"/>
                     <TableColumn fx:id="colCliente" text="Cliente" prefWidth="250"/>
@@ -46,12 +68,8 @@
             </TableView>
 
             <!-- PANEL DETALLES -->
-            <VBox spacing="12"
-                  style="-fx-background-color: white; -fx-padding: 20;
-                         -fx-background-radius: 8; -fx-border-color: #D0D0D0;">
-
-                <Label text="Detalles de la Venta"
-                       style="-fx-font-weight: bold; -fx-font-size: 14;"/>
+            <VBox spacing="12" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                <Label text="Detalles de la Venta" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
 
                 <Label fx:id="lblDetalleCliente" text="Cliente: "/>
                 <Label fx:id="lblDetalleFecha" text="Fecha: "/>
@@ -72,10 +90,7 @@
                        text="No hay detalles para esta venta."
                        visible="false"
                        style="-fx-text-fill: gray; -fx-font-size: 12;"/>
-
             </VBox>
-
         </VBox>
     </center>
-
 </BorderPane>

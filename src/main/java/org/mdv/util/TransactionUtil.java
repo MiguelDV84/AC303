@@ -21,6 +21,8 @@ public class TransactionUtil {
                 throw new RuntimeException("Error en transacción JPA", e);
             }
             em.getTransaction().rollback();
+        } finally {
+            em.close();
         }
     }
 

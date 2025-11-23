@@ -56,6 +56,12 @@
                     🔍 Buscar Código
                 </Button>
 
+                <Button onAction="#filtrarPorStockBajo"
+                        style="-fx-background-color: #3498DB; -fx-background-radius: 6;
+                               -fx-text-fill: white;">
+                    🔍 Stock bajo
+                </Button>
+
                 <Button onAction="#filtrarPorNombre"
                         style="-fx-background-color: #9B59B6; -fx-background-radius: 6;
                                -fx-text-fill: white;">

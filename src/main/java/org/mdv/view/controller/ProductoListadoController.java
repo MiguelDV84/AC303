@@ -16,15 +16,23 @@ import org.mdv.service.CategoriaService;
 
 public class ProductoListadoController extends WindowControllerBase {
 
-    @FXML private TableView<ProductoResponse> tablaProductos;
-    @FXML private TableColumn<ProductoResponse, String> colCodigo;
-    @FXML private TableColumn<ProductoResponse, String> colDescripcion;
-    @FXML private TableColumn<ProductoResponse, String> colPrecio;
-    @FXML private TableColumn<ProductoResponse, String> colStock;
-    @FXML private TableColumn<ProductoResponse, String> colCategoria;
+    @FXML
+    private TableView<ProductoResponse> tablaProductos;
+    @FXML
+    private TableColumn<ProductoResponse, String> colCodigo;
+    @FXML
+    private TableColumn<ProductoResponse, String> colDescripcion;
+    @FXML
+    private TableColumn<ProductoResponse, String> colPrecio;
+    @FXML
+    private TableColumn<ProductoResponse, String> colStock;
+    @FXML
+    private TableColumn<ProductoResponse, String> colCategoria;
 
-    @FXML private TextField txtFiltro;
-    @FXML private Label lblTotal;
+    @FXML
+    private TextField txtFiltro;
+    @FXML
+    private Label lblTotal;
 
     private final ObservableList<ProductoResponse> listaProductos = FXCollections.observableArrayList();
     private final ProductoService productoService = new ProductoService(new CategoriaService());
@@ -76,7 +84,6 @@ public class ProductoListadoController extends WindowControllerBase {
     }
 
 
-
     @FXML
     public void filtrarPorNombre() {
         String filtro = txtFiltro.getText().toLowerCase();
@@ -85,6 +92,11 @@ public class ProductoListadoController extends WindowControllerBase {
         } else {
             obtenerProductos();
         }
+    }
+
+    @FXML
+    public void filtrarPorStockBajo() {
+        listaProductos.setAll(productoService.buscarConStockBajo());
     }
 
 

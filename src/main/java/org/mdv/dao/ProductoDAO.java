@@ -40,6 +40,12 @@ public class ProductoDAO {
                 .getResultList();
     }
 
+    public List<Producto> buscarConStockBajo() {
+        return em.createQuery(ProductoSQL.SELECT_ALL_LOW_STOCK.getQuery(),Producto.class)
+                .setParameter("limite",25)
+                .getResultList();
+    }
+
     public void borrar(String cod) {
         Producto ref = em.getReference(Producto.class, cod);
         em.remove(ref);

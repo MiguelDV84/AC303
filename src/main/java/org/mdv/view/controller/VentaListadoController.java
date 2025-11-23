@@ -6,27 +6,53 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+
 import org.mdv.dto.VentaDetalleResponse;
+import org.mdv.dto.VentaRequest;
 import org.mdv.dto.VentaResponse;
+import org.mdv.model.Venta;
 import org.mdv.service.*;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class VentaListadoController extends WindowControllerBase {
 
-    @FXML private TableView<VentaResponse> tablaVentas;
-    @FXML private TableColumn<VentaResponse, String> colFecha;
-    @FXML private TableColumn<VentaResponse, String> colCliente;
-    @FXML private TableColumn<VentaResponse, String> colTotal;
+    // ----------- BUSQUEDA -----------
+    @FXML
+    private TextField txtBuscarCliente;
+    @FXML
+    private DatePicker dateBuscarFecha;
+    @FXML
+    private Label lblTotalDia;
 
-    @FXML private TableView<VentaDetalleResponse> tablaDetalles;
-    @FXML private TableColumn<VentaDetalleResponse, String> colProd;
-    @FXML private TableColumn<VentaDetalleResponse, String> colCant;
-    @FXML private TableColumn<VentaDetalleResponse, String> colPrecio;
-    @FXML private TableColumn<VentaDetalleResponse, String> colLinea;
+    // ----------- TABLA DE VENTAS -----------
+    @FXML
+    private TableView<VentaResponse> tablaVentas;
+    @FXML
+    private TableColumn<VentaResponse, String> colFecha;
+    @FXML
+    private TableColumn<VentaResponse, String> colCliente;
+    @FXML
+    private TableColumn<VentaResponse, String> colTotal;
 
-    @FXML private Label lblDetalleCliente;
-    @FXML private Label lblDetalleFecha;
-    @FXML private Label lblDetalleTotal;
-    @FXML private Label lblSinDetalles;
+    // ----------- DETALLES DE LA VENTA -----------
+    @FXML
+    private TableView<VentaDetalleResponse> tablaDetalles;
+    @FXML
+    private TableColumn<VentaDetalleResponse, String> colProd;
+    @FXML
+    private TableColumn<VentaDetalleResponse, String> colCant;
+    @FXML
+    private TableColumn<VentaDetalleResponse, String> colPrecio;
+    @FXML
+    private TableColumn<VentaDetalleResponse, String> colLinea;
 
+    @FXML
+    private Label lblDetalleCliente, lblDetalleFecha, lblDetalleTotal, lblSinDetalles;
+
+    // ----------- SERVICIOS -----------
     private final VentaService ventaService;
 
     private final ObservableList<VentaResponse> listaVentas = FXCollections.observableArrayList();
@@ -38,20 +64,17 @@ public class VentaListadoController extends WindowControllerBase {
         CategoriaService categoriaService = new CategoriaService();
         ProductoService productoService = new ProductoService(categoriaService);
 
-        // primero creamos VentaService sin detalles
-        VentaService ventaServiceTemp = new VentaService(clienteService, null);
+        VentaService ventaTemp = new VentaService(clienteService);
+        VentaDetalleService ventaDetalleService = new VentaDetalleService(ventaTemp, productoService);
 
-        // ahora VentaDetalleService necesita VentaService y ProductoService
-        VentaDetalleService ventaDetalleService = new VentaDetalleService(ventaServiceTemp, productoService);
-
-        // Y ahora sustituimos el null que tenía VentaService
-        this.ventaService = new VentaService(clienteService, ventaDetalleService);
+        this.ventaService = new VentaService(clienteService);
     }
 
     @FXML
     public void initialize() {
         super.initialize();
 
+        // ----- CONFIG TABLA -----
         colFecha.setCellValueFactory(v -> new ReadOnlyStringWrapper(v.getValue().fechaVenta().toString()));
         colCliente.setCellValueFactory(v -> new ReadOnlyStringWrapper(v.getValue().cliente().nombre()));
         colTotal.setCellValueFactory(v -> new ReadOnlyStringWrapper(v.getValue().importeTotal().toPlainString()));
@@ -63,16 +86,91 @@ public class VentaListadoController extends WindowControllerBase {
 
         cargarVentas();
 
-        tablaVentas.getSelectionModel().selectedItemProperty().addListener(
-                (obs, oldV, nuevaVenta) -> mostrarDetalles(nuevaVenta)
-        );
+        // Mostrar detalles al seleccionar venta
+        tablaVentas.getSelectionModel().selectedItemProperty()
+                .addListener((obs, oldV, nuevaVenta) -> mostrarDetalles(nuevaVenta));
+
+        // Habilitar botones solo si hay venta seleccionada
+        tablaVentas.getSelectionModel().selectedItemProperty()
+                .addListener((obs, oldSel, newSel) -> {
+                    boolean seleccionado = newSel != null;
+                });
     }
 
+    // =========================
+    // CARGAR LISTADO DE VENTAS
+    // =========================
     private void cargarVentas() {
         listaVentas.setAll(ventaService.buscarTodos());
         tablaVentas.setItems(listaVentas);
+        lblTotalDia.setText("");
     }
 
+    @FXML
+    private void handleActualizar(ActionEvent e) {
+        cargarVentas();
+    }
+
+    // =========================
+    // BUSCAR POR CLIENTE
+    // =========================
+    @FXML
+    private void buscarPorCliente() {
+        String texto = txtBuscarCliente.getText().trim().toLowerCase();
+
+        if (texto.isEmpty()) {
+            cargarVentas();
+            return;
+        }
+
+        List<VentaResponse> filtrado = listaVentas.stream()
+                .filter(v -> v.cliente().nombre().toLowerCase().contains(texto))
+                .collect(Collectors.toList());
+
+        tablaVentas.setItems(FXCollections.observableArrayList(filtrado));
+    }
+
+    // =========================
+    // BUSCAR POR FECHA
+    // =========================
+    @FXML
+    private void buscarPorFecha() {
+        LocalDate fecha = dateBuscarFecha.getValue();
+
+        if (fecha == null) {
+            cargarVentas();
+            return;
+        }
+
+        List<VentaResponse> filtrado = listaVentas.stream()
+                .filter(v -> v.fechaVenta().equals(fecha))
+                .collect(Collectors.toList());
+
+        tablaVentas.setItems(FXCollections.observableArrayList(filtrado));
+    }
+
+    // =========================
+    // TOTAL DEL DÍA
+    // =========================
+    @FXML
+    private void calcularTotalDia() {
+        LocalDate fecha = dateBuscarFecha.getValue();
+
+        if (fecha == null) {
+            lblTotalDia.setText("Seleccione una fecha.");
+            return;
+        }
+
+        var total = ventaService.sumTotalDia(fecha);
+
+        lblTotalDia.setText(total.isPresent()
+                ? "Total del día: €" + total.get()
+                : "Sin ventas ese día.");
+    }
+
+    // =========================
+    // DETALLES DE UNA VENTA
+    // =========================
     private void mostrarDetalles(VentaResponse venta) {
         if (venta == null) {
             listaDetalles.clear();
@@ -90,8 +188,70 @@ public class VentaListadoController extends WindowControllerBase {
         lblSinDetalles.setVisible(listaDetalles.isEmpty());
     }
 
+    // =========================
+    // ELIMINAR VENTA
+    // =========================
+    @FXML
+    private void handleEliminarVenta(ActionEvent e) {
+
+        VentaResponse seleccion = tablaVentas.getSelectionModel().getSelectedItem();
+
+        if (seleccion == null) {
+            mostrarAlerta("Seleccione una venta.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        // ⚠ IDENTIFICAR VENTA REAL EN BD (porque tu DTO NO TIENE ID)
+        Venta ventaReal = VentaResponse.toEntity(ventaService.buscarTodos().stream()
+                .filter(v ->
+                        v.fechaVenta().equals(seleccion.fechaVenta()) &&
+                                v.importeTotal().compareTo(seleccion.importeTotal()) == 0 &&
+                                v.cliente().dni().equals(seleccion.cliente().dni())
+                )
+                .findFirst()
+                .orElseThrow());
+
+        if (ventaReal == null) {
+            mostrarAlerta("No se pudo ubicar la venta real para eliminar.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Seguro que desea eliminar la venta?",
+                ButtonType.YES, ButtonType.NO);
+        confirm.showAndWait();
+
+        if (confirm.getResult() == ButtonType.YES) {
+            ventaService.borrar(ventaReal.getId());
+            cargarVentas();
+            mostrarAlerta("Venta eliminada.", Alert.AlertType.INFORMATION);
+        }
+    }
+
+    // =========================
+    // EDITAR VENTA
+    // =========================
+    @FXML
+    private void handleEditarVenta(ActionEvent e) {
+        VentaResponse venta = tablaVentas.getSelectionModel().getSelectedItem();
+
+        if (venta == null) {
+            mostrarAlerta("Seleccione una venta para editar.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        cambiarVistaConDatos(e,"/org/mdv/view/venta/venta-insert.fxml",venta);
+    }
+
     @FXML
     private void handleBackButton(ActionEvent e) {
         cambiarVista(e, "/org/mdv/view/main-window.fxml");
+    }
+    // =========================
+    // NUEVA VENTA
+    // =========================
+    @FXML
+    private void handleNuevaVentaButton(ActionEvent e) {
+        cambiarVista(e, "/org/mdv/view/venta/venta-insert.fxml");
     }
 }

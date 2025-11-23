@@ -37,7 +37,7 @@ public class ProductoService {
 
         return response.get()
                 .map(ProductoResponse::fromEntity)
-                .orElse(null);
+                .orElseThrow(() -> new RuntimeException("No se ha encontrado el producto."));
     }
 
 
@@ -59,6 +59,19 @@ public class ProductoService {
         TransactionUtil.doInSession(emf, em -> {
             ProductoDAO productoDAO = new ProductoDAO(em);
             response.set(productoDAO.buscarPorNombre(nombre));
+        });
+
+        return response.get()
+                .stream()
+                .map(ProductoResponse::fromEntity)
+                .toList();
+    }
+
+    public List<ProductoResponse> buscarConStockBajo() {
+        AtomicReference<List<Producto>> response = new AtomicReference<>();
+        TransactionUtil.doInSession(emf, em -> {
+            ProductoDAO productoDAO = new ProductoDAO(em);
+            response.set(productoDAO.buscarConStockBajo());
         });
 
         return response.get()

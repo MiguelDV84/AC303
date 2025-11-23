@@ -7,6 +7,6 @@ public record VentaDetalleRequest(
         BigDecimal precioUnitario,
         BigDecimal totalLinea,
         String codProd,
-        Long ventaId
+        int ventaId
 ) {
 }

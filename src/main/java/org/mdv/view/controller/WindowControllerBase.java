@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.mdv.dto.VentaResponse;
 
 public abstract class WindowControllerBase {
 
