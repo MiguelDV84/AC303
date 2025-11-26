@@ -23,6 +23,7 @@ public class CategoriaService {
 
     public void guardar(CategoriaRequest request) {
         TransactionUtil.doInTransaction(emf, em -> {
+
             CategoriaDAO categoriaDAO = new CategoriaDAO(em);
             Categoria categoria = Categoria.builder()
                     .nombre(request.nombre())

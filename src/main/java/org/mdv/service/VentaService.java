@@ -115,8 +115,7 @@ public class VentaService {
                     .build();
 
             // vincular
-            detalles.forEach(x -> x.setVenta(venta));
-
+            detalles.forEach(venta::addVentaDetalle);
 
             ventaDAO.guardar(venta);
 
